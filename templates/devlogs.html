@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="devlogs-layout">
+    <section class="devlogs-main">
+        <h2>🧠 Journal Devlogs</h2>
+        <p>Raw entries pulled from my journal. They document my entire development process. Be aware of inconsistencies or rambling.</p>
+
+        <div class="devlog-list">
+            {% for devlog in devlogs %}
+            <a href="{{ devlog.link or '/devlogs/' ~ devlog.id }}" class="devlog-link">
+                <article class="devlog-entry">
+                    <h3>{{ devlog.title }}</h3>
+                    <p class="date">{{ devlog.date }}</p>
+                    <p>{{ devlog.summary }}</p>
+                </article>
+            </a>
+            {% endfor %}
+        </div>
+    </section>
+</div>
+{% endblock %}

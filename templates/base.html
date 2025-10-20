@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title if title else "Portfolio" }}</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    {% block head %}{% endblock %}
+</head>
+<body data-project-key="{{ key if key else '' }}">
+    <div class="layout">
+        <aside class="sidebar">
+            <h3>Navigation</h3>
+            <ul>
+            <li><a href="/">✅ Project Checklist</a></li>
+            </ul>
+            {% for size, label in [("beginning","The Beginning..."), ("big","Major Projects"), ("medium","Medium Projects"), ("small","Small Projects")] %}
+                <h4>{{ label }}</h4>
+                <ul>
+                {% for key, project in projects.items() if project.size == size %}
+                    <li>
+                        <a href="{{ url_for('project', key=key) }}">{{ project.emoji }} {{ project.title }}</a>
+                    </li>
+                {% endfor %}
+                </ul>
+            {% endfor %}
+
+            <h4>The Journal</h4>
+            <ul class="bottom-links">
+                <li><a href="{{ url_for('devlogs') }}">📓 Journal Devlogs</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    <footer>
+        <p>&copy; {{ 2025 }} Konner Knoll</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

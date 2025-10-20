@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="devlog-page">
+    <section class="devlog-main">
+        <h2>{{ devlog.title }}</h2>
+        <p class="date">{{ devlog.date }}</p>
+        <div class="devlog-content">
+            {{ devlog.content | safe }}
+        </div>
+    </section>
+</div>
+{% endblock %}

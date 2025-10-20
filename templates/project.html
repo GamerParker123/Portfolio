@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="project-page">
+    <h2>{{ project.emoji }} {{ project.title }}</h2>
+    <p class="description">{{ project.description }}</p>
+
+    <h3>Technologies Used</h3>
+    <ul class="tech-list">
+        {% for tech in project.tech %}
+            <li>{{ tech }}</li>
+        {% endfor %}
+    </ul>
+
+    {% if project.links %}
+        <h3>Links</h3>
+        <ul class="project-links">
+            {% for name, url in project.links.items() %}
+                <li><a href="{{ url }}" target="_blank" rel="noopener">{{ name }}</a></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if project.title == "Hapax Analyzer" %}
+        <h3>Try the Demo</h3>
+        <form method="POST" enctype="multipart/form-data">
+            <label for="file">Upload a .txt file:</label><br>
+            <input type="file" name="file" accept=".txt" required>
+            <button type="submit">Analyze</button>
+        </form>
+
+        {% if hapax_img %}
+            <h3>Hapax Rate Plot</h3>
+            <img src="data:image/png;base64,{{ hapax_img }}" alt="Hapax Rate Plot" style="max-width:100%; height:auto;">
+        {% endif %}
+    {% endif %}
+
+    <div class="nav-buttons">
+        <a href="{{ url_for('index') }}" class="back-button">← Back to Projects</a>
+    </div>
+</div>
+{% endblock %}

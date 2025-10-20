@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="overlay">
+    <h2 id="title-text" class="typing">Welcome to the KonnerVerse</h2>
+    <button id="begin">Begin</button>
+</div>
+
+<div id="main-content" class="hidden">
+    <section class="checklist">
+        <h2>Project Checklist</h2>
+        <ul id="project-list">
+            {% for key, project in projects.items() %}
+                <li data-key="{{ key }}">
+                    <a href="{{ url_for('project', key=key) }}">{{ project.emoji }} {{ project.title }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <section class="explore-area">
+        <p>Click a project to explore it.</p>
+        <p><a href="{{ url_for('devlogs') }}">Or read the Journal Devlogs →</a></p>
+    </section>
+</div>
+{% endblock %}
