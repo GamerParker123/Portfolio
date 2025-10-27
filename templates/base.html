@@ -14,7 +14,7 @@
             <ul>
             <li><a href="/">✅ Project Checklist</a></li>
             </ul>
-            {% for size, label in [("beginning","The Beginning..."), ("big","Major Projects"), ("medium","Medium Projects"), ("small","Small Projects")] %}
+            {% for size, label in [("big","Major Projects"), ("beginning","The Beginning..."), ("medium","Medium Projects"), ("small","Small Projects")] %}
                 <h4>{{ label }}</h4>
                 <ul>
                 {% for key, project in projects.items() if project.size == size %}
@@ -32,6 +32,11 @@
         </aside>
 
         <main class="main-content">
+            <div id="progress-container">
+                <div id="progress-bar"></div>
+                <span id="progress-text">0%</span>
+            </div>
+
             {% block content %}{% endblock %}
         </main>
     </div>
@@ -41,6 +46,31 @@
     </footer>
 
     <script src="{{ url_for('static', filename='script.js') }}"></script>
-    {% block scripts %}{% endblock %}
+    {% block scripts %}
+    <script>
+
+        // Total number of projects
+        const totalProjects = Object.keys({{ projects|tojson }}).length;
+
+        // Mark current project as visited
+        if (currentProject) {
+            visitedProjects[currentProject] = true;
+            localStorage.setItem('visitedProjects', JSON.stringify(visitedProjects));
+        }
+
+        function updateProgressBar() {
+            const visited = Object.keys(visitedProjects).length;
+            const progress = (visited / totalProjects) * 100;
+
+            const bar = document.getElementById('progress-bar');
+            if (bar) bar.style.width = progress + '%';
+
+            const progressText = document.getElementById('progress-text');
+            if (progressText) progressText.textContent = Math.round(progress) + '%';
+        }
+
+        updateProgressBar();
+    </script>
+    {% endblock %}
 </body>
 </html>

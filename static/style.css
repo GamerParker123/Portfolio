@@ -50,10 +50,10 @@ body {
   pointer-events: none;
 }
 
-#main-content {
-  opacity: 0;
-  transition: opacity 1s ease;
-  display: block; /* always take up space */
+.main-content {
+    flex: 1;
+    padding: 30px 20px 20px 20px; /* add top padding to account for the fixed bar */
+    box-sizing: border-box;
 }
 #main-content.hidden {
   display: none; /* hide only when .hidden */
@@ -368,4 +368,46 @@ footer {
 #project-list li.visited a {
     text-decoration: line-through;
     opacity: 0.6;
+}
+
+.project-details h4 {
+    margin-top: 16px;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #fff; /* adjust based on your theme */
+}
+
+.project-details p {
+    margin-bottom: 12px;
+}
+
+/* Progress bar fixed at top */
+#progress-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 8px;
+    background-color: #333;
+    border-radius: 0;       /* optional: flush edges for full-width look */
+    overflow: hidden;
+    z-index: 9999;          /* make sure it’s above everything */
+}
+
+/* Inner bar */
+#progress-bar {
+    height: 100%;
+    width: 0%;
+    background-color: #4caf50;
+    transition: width 0.3s ease;
+}
+
+/* Optional: progress text */
+#progress-text {
+    position: fixed;
+    top: 10px;              /* adjust if you want it below the bar */
+    right: 20px;
+    color: white;
+    font-weight: bold;
+    z-index: 10000;
 }

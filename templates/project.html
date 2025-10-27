@@ -21,6 +21,26 @@
         </ul>
     {% endif %}
 
+    {% if project.details %}
+        <h3>Deep Dive</h3>
+        <div class="project-details" style="margin-top:12px; line-height:1.6;">
+            {% if project.details.motivation %}
+                <h4>Motivation</h4>
+                <p>{{ project.details.motivation }}</p>
+            {% endif %}
+
+            {% if project.details.about %}
+                <h4>About</h4>
+                <p>{{ project.details.about }}</p>
+            {% endif %}
+
+            {% if project.details.lessons %}
+                <h4>Lessons Learned</h4>
+                <p>{{ project.details.lessons }}</p>
+            {% endif %}
+        </div>
+    {% endif %}
+
     {% if project.title == "Hapax Analyzer" %}
         <h3>Try the Demo</h3>
         <form method="POST" enctype="multipart/form-data">
@@ -33,6 +53,31 @@
             <h3>Hapax Rate Plot</h3>
             <img src="data:image/png;base64,{{ hapax_img }}" alt="Hapax Rate Plot" style="max-width:100%; height:auto;">
         {% endif %}
+    {% endif %}
+
+    {% if project.title == "\"Fact of the Day\" (FOD) Generator" %}
+        <h3>Try the Demo</h3>
+        <form method="POST">
+            <button type="submit">Generate Fun Fact</button>
+        </form>
+
+        {% if fact_img %}
+            <h3>Result</h3>
+            <img src="data:image/png;base64,{{ fact_img }}" 
+                alt="Fun Fact Image" 
+                style="max-width:100%; height:auto; border-radius:12px;">
+        {% endif %}
+    {% endif %}
+
+    {% if project.title == "Unity Simulation Prototype" and project.screenshots %}
+        <h3>Screenshots</h3>
+        <div class="screenshot-gallery" style="display: flex; flex-direction: column; gap: 16px; margin-top: 12px;">
+            {% for shot in project.screenshots %}
+                <div style="overflow:hidden; border-radius:12px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
+                    <img src="{{ shot.src }}" alt="{{ shot.alt }}" style="width:100%; height:auto; display:block;">
+                </div>
+            {% endfor %}
+        </div>
     {% endif %}
 
     <div class="nav-buttons">
