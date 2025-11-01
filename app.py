@@ -49,7 +49,7 @@ PROJECTS = {
         "tech": ["Python", "Supabase", "Flask"],
         "size": "big",
         "links": {
-            "GitHub (public version w/ sensitive info removed)": "https://github.com/GamerParker123/ParkerVersePublic"
+            "GitHub (public version w/ sensitive info removed)": "https://github.com/GamerParker123/ParkerVersePublic",
             "Site link (very slow)": "https://parkerhub.onrender.com/",
             "Discord development server": "https://discord.gg/ggcvmBEdBB"
         }
