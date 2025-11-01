@@ -167,8 +167,9 @@ def project(key):
         import requests, io, base64, random, datetime, os
         from PIL import Image, ImageDraw, ImageFont
 
-        IMAGE_FOLDER = os.path.join("static", "fod_images")  # put your images here
-        FONT_PATH = os.path.join("static", "fonts", "Anton-Regular.ttf")
+        BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+        IMAGE_FOLDER = os.path.join(BASE_DIR, 'static', 'fod_images')
+        FONT_PATH = os.path.join(BASE_DIR, "static", "fonts", "Anton-Regular.ttf")
 
         def get_random_fact():
             url = "https://uselessfacts.jsph.pl/random.json?language=en"
