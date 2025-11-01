@@ -317,7 +317,8 @@ def project(key):
         key=key
     )
 
-DEVLOGS_FOLDER = "devlogs_md"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DEVLOGS_FOLDER = os.path.join(BASE_DIR, 'devlogs_md')
 
 def load_devlogs():
     devlogs = []
