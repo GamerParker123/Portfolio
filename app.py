@@ -39,7 +39,7 @@ PROJECTS = {
         "tech": ["Python", "OpenAI API", "JSON", "ChromaDB"],
         "size": "big",
         "links": {
-            "GitHub": "Coming soon"
+            "GitHub (public version w/ sensitive info removed)": "https://github.com/GamerParker123/Immersive-Chatbot-Public"
         }
     },
     "video-site": {
@@ -49,6 +49,7 @@ PROJECTS = {
         "tech": ["Python", "Supabase", "Flask"],
         "size": "big",
         "links": {
+            "GitHub (public version w/ sensitive info removed)": "https://github.com/GamerParker123/ParkerVersePublic"
             "Site link (very slow)": "https://parkerhub.onrender.com/",
             "Discord development server": "https://discord.gg/ggcvmBEdBB"
         }
@@ -90,7 +91,7 @@ PROJECTS = {
         "tech": ["Python", "Tkinter", "difflib", "OpenAI API", "ChromaDB"],
         "size": "medium",
         "links": {
-            "GitHub": "Coming soon"
+            "GitHub (public version w/ sensitive info removed)": "https://github.com/GamerParker123/AICodeAssistantPublic"
         }
     },
     "spotify-nicheness-analyzer": {
