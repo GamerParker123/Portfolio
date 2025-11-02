@@ -69,12 +69,13 @@
         {% endif %}
     {% endif %}
 
-    {% if project.title == "Unity Simulation Prototype" and project.screenshots %}
+    {% if project.screenshots %}
         <h3>Screenshots</h3>
         <div class="screenshot-gallery" style="display: flex; flex-direction: column; gap: 16px; margin-top: 12px;">
             {% for shot in project.screenshots %}
-                <div style="overflow:hidden; border-radius:12px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
+                <div style="overflow:hidden; border-radius:12px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); text-align: center;">
                     <img src="{{ shot.src }}" alt="{{ shot.alt }}" style="width:100%; height:auto; display:block;">
+                    <p style="margin-top: 8px; font-size: 0.9rem; color: #fff;">{{ shot.alt }}</p>
                 </div>
             {% endfor %}
         </div>

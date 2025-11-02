@@ -10,10 +10,16 @@
     <section class="checklist">
         <h2>Project Checklist</h2>
         <ul id="project-list">
+            {% for size, label in [("big","Major Projects"), ("beginning","The Beginning..."), ("medium","Medium Projects"), ("small","Small Projects")] %}
+                {% for key, project in projects.items() if project.size == size %}
+                    <li data-key="{{ key }}">
+                        <a href="{{ url_for('project', key=key) }}">{{ project.emoji }} {{ project.title }}</a>
+                    </li>
+                {% endfor %}
+            <br>
+            {% endfor %}
             {% for key, project in projects.items() %}
-                <li data-key="{{ key }}">
-                    <a href="{{ url_for('project', key=key) }}">{{ project.emoji }} {{ project.title }}</a>
-                </li>
+
             {% endfor %}
         </ul>
     </section>

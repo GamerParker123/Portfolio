@@ -12,6 +12,56 @@ app = Flask(__name__)
 
 # project data stored in a dictionary
 PROJECTS = {
+    "chatbot": {
+        "title": "Immersive Chatbot",
+        "emoji": "💬",
+        "description": "An AI LLM that uses multiple layers of memory and temporal messaging to feel like a living companion.",
+        "tech": ["Python", "OpenAI API", "JSON", "ChromaDB"],
+        "size": "big",
+        "links": {
+            "GitHub (public version w/ sensitive info removed)": "https://github.com/GamerParker123/Immersive-Chatbot-Public"
+        },
+        "screenshots": [
+            { "src": "/static/images/chatbot1.png", "alt": "The user talks to Hatsune Miku in a texting-like format" },
+            { "src": "/static/images/chatbot2.png", "alt": "The chat bot stores contextual memory, including future plans" },
+            { "src": "/static/images/chatbot3.png", "alt": "The user prompts Miku more plans" },
+            { "src": "/static/images/chatbot4.png", "alt": "The contextual memory is updated with the new plans" },
+            { "src": "/static/images/chatbot5.png", "alt": "Miku will send up to 3 responses if the user doesn't respond back" },
+            { "src": "/static/images/chatbot6.png", "alt": "Recurring events are dynamically stored in memory" },
+            { "src": "/static/images/chatbot7.png", "alt": "Each memory is given a \"strength\" depending on message similarity, recency, and repetition (if a user says something about oranges, Miku will remember other references of oranges)" },
+            { "src": "/static/images/chatbot8.png", "alt": "Miku is assigned an automatically generated personality document based on her traits, and this updates daily (traits slowly drift based on her emotions)" },
+        ],
+        "details": {
+        "motivation": ".",
+        "about": ".",
+        "lessons": "."
+        }
+    },
+    "video-site": {
+        "title": "ParkerVerse: The Gamified Social Media",
+        "emoji": "📺",
+        "description": "A social media site mixed with a video game: ephemeral video storage, individual focus trees, user communities, and more...",
+        "tech": ["Python", "Supabase", "Flask"],
+        "size": "big",
+        "links": {
+            "GitHub (public version w/ sensitive info removed)": "https://github.com/GamerParker123/ParkerVersePublic",
+            "Site link (very slow)": "https://parkerhub.onrender.com/",
+            "Discord development server": "https://discord.gg/ggcvmBEdBB"
+        },
+        "screenshots": [
+            { "src": "/static/images/parkerverse1.png", "alt": "The home page (in flame theme - unlocked in the focus tree)" },
+            { "src": "/static/images/parkerverse2.png", "alt": "The \"Hall of Fame\" page (in dark theme)" },
+            { "src": "/static/images/parkerverse3.png", "alt": "An example of a video page (in aqua theme - unlocked in the focus tree)" },
+            { "src": "/static/images/parkerverse4.png", "alt": "An example of a profile page (everything is in aqua theme after this)" },
+            { "src": "/static/images/parkerverse5.png", "alt": "The focus tree page" },
+            { "src": "/static/images/parkerverse6.png", "alt": "The video upload page" }
+        ],
+        "details": {
+        "motivation": ".",
+        "about": ".",
+        "lessons": "."
+        }
+    },
     "simulation": {
         "title": "Unity Simulation Prototype",
         "emoji": "🧠",
@@ -32,26 +82,62 @@ PROJECTS = {
         "lessons": "I gained lots of experience with Unity and C#, which are tools I'd never used before. AI integration was particularly tricky, as the messages weren't being parsed correctly. I ended up needing to parse manually, which wasn't ideal, but it got the job done. Finally, while this project is temporarily discontinued, it's arguably my most important, as it inspired me to create everything else in this portfolio."
         }
     },
-    "chatbot": {
-        "title": "Immersive Chatbot",
-        "emoji": "💬",
-        "description": "An AI LLM that uses multiple layers of memory and temporal messaging to feel like a living companion.",
-        "tech": ["Python", "OpenAI API", "JSON", "ChromaDB"],
-        "size": "big",
+    "ai-programming-assistant": {
+        "title": "AI Programming Assistant",
+        "emoji": "🤖",
+        "description": "An application that uses embedded search and chunking to edit relevant files in your codebase.",
+        "tech": ["Python", "Tkinter", "difflib", "OpenAI API", "ChromaDB"],
+        "size": "medium",
         "links": {
-            "GitHub (public version w/ sensitive info removed)": "https://github.com/GamerParker123/Immersive-Chatbot-Public"
+            "GitHub (public version w/ sensitive info removed)": "https://github.com/GamerParker123/AICodeAssistantPublic"
+        },
+        "screenshots": [
+            { "src": "/static/images/aiprogrammingassistant1.png", "alt": "The user submits a prompt, the AI selects a relevant file and code chunks, and it displays the changes" }
+        ],
+        "details": {
+        "motivation": ".",
+        "about": ".",
+        "lessons": "."
         }
     },
-    "video-site": {
-        "title": "ParkerVerse: The Gamified Social Media",
-        "emoji": "📺",
-        "description": "A social media site mixed with a video game: ephemeral video storage, individual focus trees, user communities, and more...",
-        "tech": ["Python", "Supabase", "Flask"],
-        "size": "big",
+    "spotify-nicheness-analyzer": {
+        "title": "Spotify Nicheness Analyzer",
+        "emoji": "🎧",
+        "description": "Determines how \"niche\" your Spotify playlists are in a user-friendly, shareable format.",
+        "tech": ["Python", "Flask", "Base64", "SQLite", "Requests", "aiohttp"],
+        "size": "medium",
         "links": {
-            "GitHub (public version w/ sensitive info removed)": "https://github.com/GamerParker123/ParkerVersePublic",
-            "Site link (very slow)": "https://parkerhub.onrender.com/",
-            "Discord development server": "https://discord.gg/ggcvmBEdBB"
+            "GitHub (public version w/ sensitive info removed)": "https://github.com/GamerParker123/MusicNichenessRaterPublic"
+        },
+        "screenshots": [
+            { "src": "/static/images/nichenessanalyzer1.png", "alt": "The submission page of the analyzer" },
+            { "src": "/static/images/nichenessanalyzer2.png", "alt": "Playlist selection" },
+            { "src": "/static/images/nichenessanalyzer3.png", "alt": "The results page, showing your \"nicheness\" score and a few other visuals" },
+        ],
+        "details": {
+        "motivation": "I wanted to design a public-facing project optimized for virality. People cling strongly to individuality, so I thought it would be fun to design a tool where they could see how \"unique\" your song tastes are and be able to share it with others.",
+        "about": "This tool uses Spotify to authorize users and collect playlist data. Once the user inputs some playlists, they're able to calculate a \"nicheness score\" that displays how unique their playlist is. They're encouraged to share their results on social media. Unfortunately, due to Spotify's developer limitations, I'm unable to make the project public (which kind of defeats the virality point, haha). However, all the code is available in the GitHub link, and screenshots are pasted below.",
+        "lessons": "This was the first tool I designed specifically for shareability, and it taught me how to make poppy displays using CSS and JS. It was unlike anything I'd made before, as it's one of the first things I didn't design for my own needs."
+        }
+    },
+    "smart-mp3-player": {
+        "title": "Smart MP3 Player",
+        "emoji": "🎵",
+        "description": "Uses specialized weighting to shuffle playlists and features audio normalization.",
+        "tech": ["Python", "Tkinter", "Mutagen", "VLC", "Pillow"],
+        "size": "medium",
+        "links": {
+            "GitHub": "https://github.com/GamerParker123/smart-mp3-player"
+        }
+    },
+    "productivity-timer": {
+        "title": "Productivity Timer",
+        "emoji": "⏱️",
+        "description": "A Pomodoro-style timer that graphs your desktop activity and lets you block apps during work time.",
+        "tech": ["Python", "Tkinter", "Matplotlib"],
+        "size": "medium",
+        "links": {
+            "GitHub": "https://github.com/GamerParker123/Productivity-Timer"
         }
     },
     "secret-santa": {
@@ -82,46 +168,6 @@ PROJECTS = {
         "size": "small",
         "links": {
             "GitHub": "https://github.com/GamerParker123/Hapax-Analyzer"
-        }
-    },
-    "ai-programming-assistant": {
-        "title": "AI Programming Assistant",
-        "emoji": "🤖",
-        "description": "An application that uses embedded search and chunking to edit relevant files in your codebase.",
-        "tech": ["Python", "Tkinter", "difflib", "OpenAI API", "ChromaDB"],
-        "size": "medium",
-        "links": {
-            "GitHub (public version w/ sensitive info removed)": "https://github.com/GamerParker123/AICodeAssistantPublic"
-        }
-    },
-    "spotify-nicheness-analyzer": {
-        "title": "Spotify Nicheness Analyzer",
-        "emoji": "🎧",
-        "description": "Determines how \"niche\" your Spotify playlists are in a user-friendly, shareable format.",
-        "tech": ["Python", "Flask", "Base64", "SQLite", "Requests", "aiohttp"],
-        "size": "medium",
-        "links": {
-            "GitHub": "https://github.com/GamerParker123/MusicNichenessRater"
-        }
-    },
-    "smart-mp3-player": {
-        "title": "Smart MP3 Player",
-        "emoji": "🎵",
-        "description": "Uses specialized weighting to shuffle playlists and features audio normalization.",
-        "tech": ["Python", "Tkinter", "Mutagen", "VLC", "Pillow"],
-        "size": "medium",
-        "links": {
-            "GitHub": "https://github.com/GamerParker123/smart-mp3-player"
-        }
-    },
-    "productivity-timer": {
-        "title": "Productivity Timer",
-        "emoji": "⏱️",
-        "description": "A Pomodoro-style timer that graphs your desktop activity and lets you block apps during work time.",
-        "tech": ["Python", "Tkinter", "Matplotlib"],
-        "size": "medium",
-        "links": {
-            "GitHub": "https://github.com/GamerParker123/Productivity-Timer"
         }
     },
     "spreadsheet-filler": {
