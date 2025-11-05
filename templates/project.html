@@ -69,6 +69,32 @@
         {% endif %}
     {% endif %}
 
+    {% if project.videos %}
+        <h3>Video Demonstration</h3>
+        <div class="video-gallery" style="display: flex; flex-direction: column; gap: 16px; margin-top: 12px;">
+            {% for video in project.videos %}
+                <div style="overflow:hidden; border-radius:12px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); text-align: center;">
+                    {% if "youtube" in video.src %}
+                        <iframe 
+                            src="{{ video.src }}" 
+                            title="{{ video.title }}" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen
+                            style="width:100%; aspect-ratio:16/9; border-radius:12px;">
+                        </iframe>
+                    {% else %}
+                        <video controls style="width:100%; border-radius:12px;">
+                            <source src="{{ video.src }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    {% endif %}
+                    <p style="margin-top: 8px; font-size: 0.9rem; color: #fff;">{{ video.title }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
     {% if project.screenshots %}
         <h3>Screenshots</h3>
         <div class="screenshot-gallery" style="display: flex; flex-direction: column; gap: 16px; margin-top: 12px;">

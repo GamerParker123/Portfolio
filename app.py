@@ -16,11 +16,17 @@ PROJECTS = {
         "title": "Immersive Chatbot",
         "emoji": "💬",
         "description": "An AI LLM that uses multiple layers of memory and temporal messaging to feel like a living companion.",
-        "tech": ["Python", "OpenAI API", "JSON", "ChromaDB"],
+        "tech": ["Python", "OpenAI API", "JSON", "ChromaDB", "Hugging Face"],
         "size": "big",
         "links": {
             "GitHub (public version w/ sensitive info removed)": "https://github.com/GamerParker123/Immersive-Chatbot-Public"
         },
+        "videos": [
+            {
+                "src": "/static/videos/mikuchatbotdemo.mp4",
+                "title": "Quick demonstration of the chatbot's main features"
+            }
+        ],
         "screenshots": [
             { "src": "/static/images/chatbot1.png", "alt": "The user talks to Hatsune Miku in a texting-like format" },
             { "src": "/static/images/chatbot2.png", "alt": "The chat bot stores contextual memory, including future plans" },
@@ -32,9 +38,9 @@ PROJECTS = {
             { "src": "/static/images/chatbot8.png", "alt": "Miku is assigned an automatically generated personality document based on her traits, and this updates daily (traits slowly drift based on her emotions)" },
         ],
         "details": {
-        "motivation": ".",
-        "about": ".",
-        "lessons": "."
+        "motivation": "This project has two primary motivations. First, it's an extension to my Unity simulation prototype (see my motivation for that in its respective section). Half of the battle is making Miku act like, well, Miku, and that requires a powerful AI model. The second motivation came from a limitation I saw with modern chat bots. Current LLMs are pretty good at generating responses given some conversation data, but they don't know how to collect that data effectively. This means you can't grow with an AI like you can another person. Current language models won't remember old experiences with you or relevant facts. Solving that problem has been the core of this project.",
+        "about": "This is a chat bot with the personality of Hatsune Miku. However, the LLM layer is a very small piece; it uses OpenAI's API. The bulk of the effort is put toward memory allocation. I've divided memory into a few crucial categories: recent, strong, contextual, episodic, and wildcard. Recent memories are what you'd expect - just the most recent messages in the conversation. Strong memories are a bit more complex. They use embedded search to map word vectors and match similar messages. They also factor emotion; messages with a similar emotion to the message sent will be stronger. Emotions are calculated using j-hartmann's Emotion English DistilRoBERTa-base model from Hugging Face, and they're divided into seven types (anger, disgust, fear, joy, neutral, sadness, surprise). Strength is also weighted by message recency, so more recent messages are slightly stronger. After all of this is calculated, the model takes the strongest messages relative to whatever the user sent and adds them to the prompt. The next type of memory, contextual memory, describes anything going on at the given moment. It includes time, mood, the current activity, recurring events (like anniversaries), locations, and plans. To generate mood, current activity, and plans, a helper LLM is used. This fixes a big issue with current chat bots, which is that they get sidetracked in long conversations. With my system, you're able to say, \"I want to go to the movies\" and \"I want to get ice cream,\" and the AI isn't going to forget either of those plans until they're completed. Next, episodic memory is message summaries. To help the AI remember general ideas without overfilling the context window, summaries of old conversations are generated and insertered. It uses a hierarchical model where a summary is generated for every 10 messages. Once you have 10 of these 10-message summaries, it generates a summary based off of those, and so on. This reflects how humans think: they get the gist of past events, even if they don't remember the specifics. Finally, wildcard memories are just randomly selected memories, slightly weighted for recency. This is used to generate inspiration and add more unexpectedness to responses. Outside of memory, this project has one more key differentiator: temporal messaging. The AI knows how much time has passed between messages, and it'll send another response if the user hasn't spoken in a while. In actual conversations, not every comment gets the same amount of weight. Sometimes you get a small interjection or no comment at all, and temporal messaging brings this aspect to AI. If the user's response is absent, the AI is prompted to either expand or switch topics. Most chat bots are assistants that only respond when spoken to. Mine pokes you every so often.",
+        "lessons": "I dabbled in LLMs for the Unity prototype but nothing this advanced. I've had to learn how to quantify written text. Thankfully, a lot of this has been done for me, like current language models, but a lot of my memory system was designed from scratch. One big lesson was learning how semantic search works. This is how search engines like Google operate (although I'm sure they're more sophisticated), and it's pretty simple. You take a set of words, assign a vector to them based on tons of data, and calculate the distance between those vectors. The elegance of these systems has been surprising. In general, a big piece of the puzzle has been thinking about how people work. Whenever I test my chat bot and think, \"this feels off,\" I try to figure out why. That's what inspired me to implement the temporal messaging system. Current chat bots put too much pressure on the user to continue the conversation. I wanted to lower that barrier, so I thought about real conversations. And in real conversations, people don't talk back-and-forth perfectly. It's filled with silences, appended comments, and interjections. I've learned not only how to make a functional AI, but also how humans work (well, a little)."
         }
     },
     "video-site": {
@@ -45,11 +51,17 @@ PROJECTS = {
         "size": "big",
         "links": {
             "GitHub (public version w/ sensitive info removed)": "https://github.com/GamerParker123/ParkerVersePublic",
-            "Site link (very slow)": "https://parkerhub.onrender.com/",
+            "Site link (WORKING VERSION OF THE SITE)": "https://parkerhub.onrender.com/",
             "Discord development server": "https://discord.gg/ggcvmBEdBB"
         },
+        "videos": [
+            {
+                "src": "/static/videos/parkerversedemo.mp4",
+                "title": "Quick demonstration of ParkerVerse's main features"
+            }
+        ],
         "screenshots": [
-            { "src": "/static/images/parkerverse1.png", "alt": "The home page (in flame theme - unlocked in the focus tree)" },
+            { "src": "/static/images/parkerverse1.png", "alt": "The home page (in flame theme - unlocked in the focus tree) + note for all ParkerVerse screenshots: none of the videos depicted are my intellectual property; they're uploaded by site users" },
             { "src": "/static/images/parkerverse2.png", "alt": "The \"Hall of Fame\" page (in dark theme)" },
             { "src": "/static/images/parkerverse3.png", "alt": "An example of a video page (in aqua theme - unlocked in the focus tree)" },
             { "src": "/static/images/parkerverse4.png", "alt": "An example of a profile page (everything is in aqua theme after this)" },
@@ -57,16 +69,16 @@ PROJECTS = {
             { "src": "/static/images/parkerverse6.png", "alt": "The video upload page" }
         ],
         "details": {
-        "motivation": ".",
-        "about": ".",
-        "lessons": "."
+        "motivation": "For the past few years that I've been using YouTube, I've noticed more and more ads showing up on my videos. Apparently, they show you more ads if you tolerate them more. When this dawned on me, I was pretty angry. So for fun, I started working on a basic website you could upload videos to. I did that in an evening, and that's when I realized I could make something tangible. I wanted to make a video site that didn't use predatory monetization tactics like most platforms. Part of this came out of principle, but I also saw that many others were upset with the corporatization of social platforms. Despite that, no platform seemed to escape the grasp of corporations. I wanted to change that. However, I soon realized that I couldn't simply make YouTube 2.0. People are creatures of habit, and you need something uniquely attractive to convince them to use another service. That's when I had one of my favorite revelations: I don't need to design this like a social media platform. Inspired by Snapchat and Wordle's daily retention strategies, I chose to design the site like a game. Users would have streaks to encourage daily activity, and there would be a focus tree where they can unlock new features. I saw an untapped part of social media, and I wanted to experiment with it. That's the long answer to why I created ParkerVerse. (I could go much longer, trust me xD)",
+        "about": "ParkerVerse is a site that incentivizes to upload and interact with others as much as you can. Multiple systems are in place to boost user activity. First, users have streaks. One is for visiting the site daily, and another is for uploading weekly. These are basic ways to encourage users to use the platform frequently. The main draw is the focus tree, which is where users spend currency (earned by being active - pretty much anything you could think of earns currency) to unlock new features. The user gets to choose what they want to unlock, and the tree is divided into a few distinct paths. One path is for profile customization, which includes things like profile pictures and banners. Another is for developer benefits, such as video tags and higher upload limits. The third is for quality of life additions, like new themes, and the fourth is for purely fun features (i.e., cursor trails, secret minigames, etc.). By giving the social media format a concrete sense of progression, engagement can be greatly increased. Another method of engaging users is through connections. Because everyone is incentivized to interact with each other, almost every post gets some form of engagement. When you get even a couple comments on a video, you feel validated. This naturally extends into the site's community system, where users can join topic-based public communities or private communities with friends. These communities have their own focus trees that grow with activity, further encouraging users to share videos. The final major site attractor is its ephemeral storage. Videos are deleted after one day, except for the most voted video of the day (which is sent to a permanent \"Hall of Fame\" to be viewed by others). Again, this gives people a reason to check the site frequently. It has the nice side effect of drastically reducing storage costs. All in all, ParkerVerse aims to make the internet a little more fun and connected than it was before.",
+        "lessons": "When it comes to raw coding, this has been one of the easier projects to develop. Web development and video sharing aren't as technically difficult to implement as other things. Personally, the lessons learned with ParkerVerse stem from scalability. There have been multiple times where I've thought the site might be doomed. I've learned to pivot when that happens. Initially, I essentially wanted to make YouTube with greater customization and less ads. However, I realized that data storage is expensive; this is what convinced me to make storage ephemeral. Next, I realized my site wasn't \"sticky\" - even if it was functionally sound, users didn't have a reason to return. That's when I took on a game design perspective. The latest issue has been bandwidth, which I've battled by implementing strong video compression. ParkerVerse has taught me how to optimize for profit and usability."
         }
     },
     "simulation": {
         "title": "Unity Simulation Prototype",
         "emoji": "🧠",
         "description": "An exploratory project with Hatsune Miku that focuses on user-entity interaction. This paved all future projects. NOTE: All assets are free models I downloaded from Sketchfab.",
-        "tech": ["C#", "Unity"],
+        "tech": ["C#", "Unity", "OpenAI API"],
         "size": "beginning",
         "screenshots": [
             { "src": "/static/images/simulation1.png", "alt": "Miku can be interacted with to open a chatbot menu" },
@@ -128,6 +140,14 @@ PROJECTS = {
         "size": "medium",
         "links": {
             "GitHub": "https://github.com/GamerParker123/smart-mp3-player"
+        },
+        "screenshots": [
+            { "src": "/static/images/smartmp3player1.png", "alt": "The player displays the current song, artist, and cover art - additionally, the user can add songs/playlists and like/dislike songs. There is also a button to skip, and you can change the volume or go to a different timestamp in the song" }
+        ],
+        "details": {
+        "motivation": ".",
+        "about": ".",
+        "lessons": "."
         }
     },
     "productivity-timer": {
@@ -138,6 +158,15 @@ PROJECTS = {
         "size": "medium",
         "links": {
             "GitHub": "https://github.com/GamerParker123/Productivity-Timer"
+        },
+        "screenshots": [
+            { "src": "/static/images/productivitytimer1.png", "alt": "Visible is the current phase (work/break) and the status. You're also able to see how much time is left until the next phase and how much \"overtime\" you have (time spent working past your limit). Below, there's a pie chart displaying how much time you've spent in each phase and the number of cycles completed for the day/week. There's also a graph below that displays your top five most used applications and how much you used them per hour. In the bottom, right, you can pause/unpause and continue to the next phase when the current one is complete. Alternatively, you can enable \"auto phase changes\" and have phases change automatically." },
+            { "src": "/static/images/productivitytimer2.png", "alt": "Below the graph stuff, you can set your work and break durations (default is 52 minutes of work / 17 minutes of break). You can also add/remove apps to block during your work period." }
+        ],
+        "details": {
+        "motivation": ".",
+        "about": ".",
+        "lessons": "."
         }
     },
     "secret-santa": {
@@ -170,26 +199,26 @@ PROJECTS = {
             "GitHub": "https://github.com/GamerParker123/Hapax-Analyzer"
         }
     },
-    "spreadsheet-filler": {
-        "title": "Spreadsheet Filler",
-        "emoji": "📊",
-        "description": "Fills out spreadsheets using an LLM given a set of parameters.",
-        "tech": ["Python", "OpenAI API", "Tkinter"],
-        "size": "small",
-        "links": {
-            "GitHub": "Coming soon"
-        }
-    },
-    "text-scrambler": {
-        "title": "Text Scrambler",
-        "emoji": "🔀",
-        "description": "Generates every possible iteration of the characters in a word (or the words in a sentence).",
-        "tech": ["Python", "Tkinter"],
-        "size": "small",
-        "links": {
-            "GitHub": "https://github.com/GamerParker123/Text-Scrambler"
-        }
-    },
+    #"spreadsheet-filler": {
+    #    "title": "Spreadsheet Filler",
+    #    "emoji": "📊",
+    #    "description": "Fills out spreadsheets using an LLM given a set of parameters.",
+    #    "tech": ["Python", "OpenAI API", "Tkinter"],
+    #    "size": "small",
+    #    "links": {
+    #        "GitHub": "Coming soon"
+    #    }
+    #},
+    #"text-scrambler": {
+    #    "title": "Text Scrambler",
+    #    "emoji": "🔀",
+    #    "description": "Generates every possible iteration of the characters in a word (or the words in a sentence).",
+    #    "tech": ["Python", "Tkinter"],
+    #    "size": "small",
+    #    "links": {
+    #        "GitHub": "https://github.com/GamerParker123/Text-Scrambler"
+    #    }
+    #},
 }
 
 @app.context_processor
