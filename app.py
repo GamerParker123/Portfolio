@@ -107,9 +107,9 @@ PROJECTS = {
             { "src": "/static/images/aiprogrammingassistant1.png", "alt": "The user submits a prompt, the AI selects a relevant file and code chunks, and it displays the changes" }
         ],
         "details": {
-        "motivation": ".",
-        "about": ".",
-        "lessons": "."
+        "motivation": "This project sprouted from of a noticeable optimization in the AI-to-code process. AI is reaching a point where it can almost code by itself. Humans just need to give relevant instructions/context, copy it over, test it, and debug it. I wanted to make a program that can eventually do all of those by itself.",
+        "about": "To use the program, the user first inputs their codebase directory, and all files in the codebase are indexed with auto-generated summaries. Once loaded, the user can insert their instructions, and they'll be matched for similarity to a list of relevant code chunks using embedded search. Code chunks are split by definitions. Once these chunks are selected, the AI adds suggested edits based on the user prompt, and the user is able to see the end result + diff. The user can choose to confirm or deny the change, and the code file will be automatically updated (along with a backup file).",
+        "lessons": "I learned a whole lot about parsing. When dealing with multi-file systems and loads of distinct code chunks, making sure everything fits together at the end is easier said that done. I had to debug rigorously, more than ever before. I spent over two days working on multi-file editing, and in the end I had to slow down and backtrack through my code. Normally, I'm able to iterate pretty quickly, so this project has been a change of pace."
         }
     },
     "spotify-nicheness-analyzer": {
@@ -145,9 +145,9 @@ PROJECTS = {
             { "src": "/static/images/smartmp3player1.png", "alt": "The player displays the current song, artist, and cover art - additionally, the user can add songs/playlists and like/dislike songs. There is also a button to skip, and you can change the volume or go to a different timestamp in the song" }
         ],
         "details": {
-        "motivation": ".",
-        "about": ".",
-        "lessons": "."
+        "motivation": "I used to use Spotify to listen to music, but they had too many ads and were missing some songs I liked. I started using MP3s to listen, but I wanted more freedom than Windows Media Player gave me. Windows Media Player doesn't normalize audio, and I didn't like how song shuffling worked, so I wrote my own program to play MP3s.",
+        "about": "The Smart MP3 Player, as its name suggests, attempts to be a smarter way to play songs. You can add songs individually or via entire folders. When played, they're shuffled and weighted based on recency. You can also like/dislike the songs, which raises/lowers the weighting. The like/dislike difference slowly approaches 0 over time unless you keep liking/disliking a song. This weighting persists across sessions, which is something Windows Media Player lacked in my experience. My MP3 player also has the features of typical MP3 players, like changing volume, pausing, skipping, displaying song metadata, etc. Finally, my player normalizes song audio, meaning every song has roughly the same volume. The Smart MP3 Player is essentially everything I'd want out of a song player. That's why I made it.",
+        "lessons": "I learned about manipulating audio data and working with VLC. I've never really used a separate program in a project before, so VLC was interesting to implement. It was a little confusing trying to package VLC within the program itself, but I got it completed. Everything else was basic Tkinter GUI formatting and reading/editing metadata for the song shuffling."
         }
     },
     "productivity-timer": {
@@ -164,9 +164,9 @@ PROJECTS = {
             { "src": "/static/images/productivitytimer2.png", "alt": "Below the graph stuff, you can set your work and break durations (default is 52 minutes of work / 17 minutes of break). You can also add/remove apps to block during your work period." }
         ],
         "details": {
-        "motivation": ".",
-        "about": ".",
-        "lessons": "."
+        "motivation": "As the depth of my projects increased, I eventually realized I needed to manage my time to keep myself from burning out. I heard of the 52-17 rule, which recommends you work for 52 minutes and take a break for 17 minutes in cycles. Online timers were frustrating because their notifications were unreliable, they couldn't be paused, and they didn't have a good way to handle overtime (time spent working during the break period). When I work, I usually get in the zone, and I don't want to cut that off arbitrarily because my timer said so. On top of that, I didn't just want a timer; I wanted a productivity suite. I wanted to track my desktop activity to gain control of my time. So like many of my other projects, I did it myself.",
+        "about": "The timer has three modes: work, break, and unscheduled. The work and break periods can be adjusted, but they default to 52 minutes and 17 minutes, respectively. The unscheduled period is activated when the user is idle or pauses the timer. While working, the user is able to disable certain apps within the timer program; attempts to open blocked apps will be, well, blocked. If you go past your allotted work period, you enter \"overtime,\" and you gain a little every second. The same happens for breaks, but instead of gaining overtime, it gets deducted. You get 7200 seconds of overtime by default, giving you 2 hours of the day for extra, unscheduled breaks. (Although, you don't have to follow this if you don't want to.) When switching between the work and break phases, you can either swap manually or automatically. Manual swapping is an option for people who get in the zone and don't want to stop working. Finally, you can see two graphs. The top graph displays your number of daily/weekly cycles as well as how much time you spend on each period. The second graph can also display daily/weekly data, and it shows your top 5 app activity per hour of the day.",
+        "lessons": "Threading. Threading is useful, but it can be a pain with Tkinter. This timer has broken more times than I can count because of async errors, and I've had to learn how to manage and properly dispose of threads. This project has also taught me to be more careful when implementing threads in the future, as I don't want to go through the same headaches I went with this one."
         }
     },
     "secret-santa": {
@@ -177,16 +177,26 @@ PROJECTS = {
         "size": "small",
         "links": {
             "GitHub": "https://github.com/GamerParker123/Secret-Santa-Probability-Tracker"
+        },
+        "details": {
+        "motivation": "Coming soon",
+        "about": "In traditional Secret Santa, names are drawn from a hat in a circle. If you pull your own name, you put your name back in the hat and pull a new one. If the last player chooses his own name, he swaps with the second to last player. If the order in which participants draw names is known, there's a bias in this system. This program takes that bias in mind and calculates the probability matrix of any player being assigned to any other given player using recursive logic. For small groups, exact probabilities are calculated. For larger groups, probabilities are found via a Monte Carlo simulation to save processing time (the difference between this method and exact calculations is negligible for large groups).",
+        "lessons": "Coming soon"
         }
     },
     "fact-of-the-day": {
         "title": "\"Fact of the Day\" (FOD) Generator",
         "emoji": "📆",
-        "description": "An automatic slideshow generator that generates a fun fact every day.",
-        "tech": ["Python", "Pillow"],
+        "description": "An automatic slideshow generator that generates a fun fact every day. Disclaimer: the images used are not mine, and the facts come from Joseph Paul's uselessfacts API.",
+        "tech": ["Python", "Pillow", "uselessfacts API"],
         "size": "small",
         "links": {
             "GitHub": "https://github.com/GamerParker123/FOD-Maker"
+        },
+        "details": {
+        "motivation": "Coming soon",
+        "about": "Coming soon",
+        "lessons": "Coming soon"
         }
     },
     "hapax-analyzer": {
@@ -197,6 +207,11 @@ PROJECTS = {
         "size": "small",
         "links": {
             "GitHub": "https://github.com/GamerParker123/Hapax-Analyzer"
+        },
+        "details": {
+        "motivation": "Coming soon",
+        "about": "Coming soon",
+        "lessons": "Coming soon"
         }
     },
     #"spreadsheet-filler": {
