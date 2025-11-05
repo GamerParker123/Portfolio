@@ -40,14 +40,14 @@ if (introSeen) {
     const fullText = title.textContent;
     title.textContent = '';
     let i = 0;
-    const minSpeed = 60;
-    const maxSpeed = 140;
+    const minSpeed = 70;
+    const maxSpeed = 160;
 
     function type() {
       if (i < fullText.length) {
         title.textContent = fullText.slice(0, i + 1);
         i++;
-        const delay = Math.random() * (maxSpeed - minSpeed) + minSpeed;
+        const delay = Math.random() * (maxSpeed - minSpeed);
         setTimeout(type, delay);
       } else {
         title.classList.add('blink');
