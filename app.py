@@ -3,10 +3,12 @@ import os
 import markdown
 import re
 import io
-from collections import Counter
+from collections import Counter, defaultdict
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+import base64
+import random
 
 app = Flask(__name__)
 
@@ -176,12 +178,13 @@ PROJECTS = {
         "tech": ["Python", "NumPy", "Matplotlib"],
         "size": "small",
         "links": {
-            "GitHub": "https://github.com/GamerParker123/Secret-Santa-Probability-Tracker"
+            "GitHub": "https://github.com/GamerParker123/Secret-Santa-Probability-Tracker",
+            "Numberphile Video That Inspired This (THIS IS NOT MINE)": "https://www.youtube.com/watch?&v=5kC5k5QBqcc"
         },
         "details": {
-        "motivation": "Coming soon",
+        "motivation": "At the start of my senior school year, my classmates were trying to set up a senior assassin game, where each student is given a random target they have to shoot with a water gun within a certain duration. My classmates decided to select assassins via hat pull. (This is just like how people choose secret santa candidates from a hat, hence the name of the project.) Remembering a video from the YouTube channel Numberphile, I knew this method had inherent bias (explained in the \"about\" section). So, wanting to predict who my assassin was, I whipped up this program to find the most likely candidates.",
         "about": "In traditional Secret Santa, names are drawn from a hat in a circle. If you pull your own name, you put your name back in the hat and pull a new one. If the last player chooses his own name, he swaps with the second to last player. If the order in which participants draw names is known, there's a bias in this system. This program takes that bias in mind and calculates the probability matrix of any player being assigned to any other given player using recursive logic. For small groups, exact probabilities are calculated. For larger groups, probabilities are found via a Monte Carlo simulation to save processing time (the difference between this method and exact calculations is negligible for large groups).",
-        "lessons": "Coming soon"
+        "lessons": "I learned a bit about statistical modeling. Hat pulling feels random, but it isn't due to the chance of receiving your own name. It was fun working through the formulas, and the Monte Carlo simulations were new to me, too. They're essentially running the model a lot of times (I chose 100,000) and estimating the probabilities from there. For simulations with a high number of participants, this didn't differ much from the actual results. Mathematical rigor can be nice, but sometimes statistical approximations get the same job done more efficiently."
         }
     },
     "fact-of-the-day": {
@@ -194,9 +197,9 @@ PROJECTS = {
             "GitHub": "https://github.com/GamerParker123/FOD-Maker"
         },
         "details": {
-        "motivation": "Coming soon",
-        "about": "Coming soon",
-        "lessons": "Coming soon"
+        "motivation": "In my school's unofficial Discord server, I run a \"Fact of the Day\" channel that includes a random fact and image every day. For months, I made these manually, but I knew I could automate the process. So, to save time, I started this project.",
+        "about": "This is an image generator that includes the date along with a random fact and image. It's formatted so the fact and image alternate position depending on the day. Additionally, facts are centered vertically and rerolled if too long.",
+        "lessons": "This was one of my earlier projects, and it taught me about using other people's APIs in my own work to create something. It also opened the door for automation of other repetitive tasks in my life. This mindset led to the creation of tools like the Productivity Timer and Smart MP3 Player."
         }
     },
     "hapax-analyzer": {
@@ -209,9 +212,9 @@ PROJECTS = {
             "GitHub": "https://github.com/GamerParker123/Hapax-Analyzer"
         },
         "details": {
-        "motivation": "Coming soon",
-        "about": "Coming soon",
-        "lessons": "Coming soon"
+        "motivation": "This project came out of pure curiosity. I had recently learned about hapax legomena (explained in the \"about\" section), and I wanted to see how that rate would change over the course of a text. I also wanted to test it on my own sets of writing, like my personal journal.",
+        "about": "Hapax legomena are words in a text/corpus that only appear one time. This program calculates the rate of hapax legomena: what percent of words in the text are hapax legomena. On top of that, it runs this calculation for every single word of the text. For instance, the first calculation will be for word 1 (which would have a rate of 100% by necessity), the second for word 1 AND 2, the third for word 1, 2, AND 3, and so on. For most corpuses, this results in a downward, decaying curve, as fewer unique words are likely to appear over the course of the text.",
+        "lessons": "This was an exploratory side project, and it mostly confirmed my original hypothesis that the hapax legomenon rate would decrease over the course of a text. It was fun to see that graphed out with actual texts. As a side note, most graphs appear to match up with the function f(x)=1/x (or some variant thereof). I'm not sure if that's a coincidence, but maybe it has something to do with Zipf's Law? (That's the observation that the frequency of a word is roughly proportional to the inverse of its rank in a frequency table.) I haven't looked into it too much, but it's an interesting observation."
         }
     },
     #"spreadsheet-filler": {
@@ -244,6 +247,50 @@ def inject_projects():
 def index():
     return render_template('index.html', title="The KonnerVerse")
 
+def exact_ordered_distribution(n):
+    results = defaultdict(float)
+    def recurse(i, remaining, assigned, prob):
+        if i == n:
+            perm = tuple(assigned)
+            results[perm] += prob
+            return
+        possible = [r for r in remaining if r != i]
+        for pick in possible:
+            new_remaining = remaining.copy()
+            new_remaining.remove(pick)
+            new_assigned = assigned + [pick]
+            recurse(i+1, new_remaining, new_assigned, prob / len(possible))
+    recurse(0, list(range(n)), [], 1.0)
+    return results
+
+def probability_matrix(n, monte_carlo_trials=100000):
+    if n < 10:
+        dist = exact_ordered_distribution(n)
+        matrix = [[0.0]*n for _ in range(n)]
+        total_prob = sum(dist.values())
+        for perm, p in dist.items():
+            for i in range(n):
+                matrix[i][perm[i]] += p / total_prob
+        return matrix
+    else:
+        counts = [[0]*n for _ in range(n)]
+        for _ in range(monte_carlo_trials):
+            remaining = list(range(n))
+            assigned = [-1]*n
+            for i in range(n):
+                options = [x for x in remaining if x != i]
+                if not options:
+                    swap_with = random.choice(range(i))
+                    assigned[i] = assigned[swap_with]
+                    assigned[swap_with] = i
+                    break
+                pick = random.choice(options)
+                assigned[i] = pick
+                remaining.remove(pick)
+            for i, p in enumerate(assigned):
+                counts[i][p] += 1
+        return [[c/monte_carlo_trials for c in row] for row in counts]
+
 @app.route('/project/<key>', methods=["GET", "POST"])
 def project(key):
     project = PROJECTS.get(key)
@@ -252,6 +299,14 @@ def project(key):
 
     hapax_img = None
     fact_img = None
+    secret_santa_matrix = None
+    secret_santa_labels = []
+
+    # === Secret Santa Demo ===
+    if key == "secret-santa" and request.method == "POST":
+        n = int(request.form.get("group_size", 4))
+        secret_santa_matrix = probability_matrix(n)
+        secret_santa_labels = [chr(65+i) for i in range(n)]  # precompute labels
 
     # === Handle FOD Generator ===
     if key == "fact-of-the-day" and request.method == "POST":
@@ -406,6 +461,8 @@ def project(key):
         title=project["title"],
         fact_img=fact_img,
         hapax_img=hapax_img,
+        secret_santa_matrix=secret_santa_matrix,
+        secret_santa_labels=secret_santa_labels,
         key=key
     )
 

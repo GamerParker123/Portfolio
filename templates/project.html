@@ -41,6 +41,81 @@
         </div>
     {% endif %}
 
+    {% if key == "secret-santa" %}
+        <h3>Secret Santa Probability Matrix Demo</h3>
+
+        <form method="post">
+            Group size: <input type="number" name="group_size" value="4" min="2" max="20">
+            <button type="submit">Compute Matrix</button>
+        </form>
+
+        {% if secret_santa_matrix %}
+        <div>
+            Show probabilities for:
+            <select id="person-select">
+                <option value="">--All--</option>
+                {% for i in range(secret_santa_matrix|length) %}
+                    <option value="{{ i }}">{{ secret_santa_labels[i] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div id="matrix-table"></div>
+        <div id="matrix-heatmap"></div>
+
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+        <script>
+        let fullMatrix = {{ secret_santa_matrix|tojson }};
+        let labels = {{ secret_santa_labels|tojson }};
+        let n = fullMatrix.length;
+
+        function renderMatrix(matrix, labels) {
+            // Table
+            let tableHTML = "<table border='1'><tr><th></th>";
+            for(let i=0;i<labels.length;i++) tableHTML += `<th>${labels[i]}</th>`;
+            tableHTML += "</tr>";
+            for(let i=0;i<labels.length;i++){
+                tableHTML += `<tr><td>${labels[i]}</td>`;
+                for(let j=0;j<labels.length;j++){
+                    tableHTML += `<td>${matrix[i][j].toFixed(3)}</td>`;
+                }
+                tableHTML += "</tr>";
+            }
+            tableHTML += "</table>";
+            document.getElementById("matrix-table").innerHTML = tableHTML;
+
+            // Heatmap
+            let data = [{
+                z: matrix,
+                x: labels,
+                y: labels,
+                type: 'heatmap',
+                colorscale: 'Viridis'
+            }];
+            Plotly.newPlot('matrix-heatmap', data);
+        }
+
+        // Initial render (full matrix)
+        renderMatrix(fullMatrix, labels);
+
+        // Handle person selection
+        document.getElementById("person-select").addEventListener("change", function() {
+            let selected = this.value;
+            if(selected === "") {
+                renderMatrix(fullMatrix, labels);
+            } else {
+                let idx = parseInt(selected);
+                let isolated = Array.from({length:n}, ()=>Array(n).fill(0));
+                for(let j=0;j<n;j++){
+                    isolated[idx][j] = fullMatrix[idx][j];
+                }
+                renderMatrix(isolated, labels);
+            }
+        });
+        </script>
+        {% endif %}
+    {% endif %}
+
     {% if project.title == "Hapax Analyzer" %}
         <h3>Try the Demo</h3>
         <form method="POST" enctype="multipart/form-data">
