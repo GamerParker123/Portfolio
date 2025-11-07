@@ -14,7 +14,7 @@
             <ul>
             <li><a href="/">✅ Project Checklist</a></li>
             </ul>
-            {% for size, label in [("big","Major Projects"), ("beginning","The Beginning..."), ("medium","Medium Projects"), ("small","Small Projects")] %}
+            {% for size, label in [("big","Major Projects (Start Here!)"), ("beginning","The Beginning..."), ("medium","Medium Projects"), ("small","Small Projects")] %}
                 <h4>{{ label }}</h4>
                 <ul>
                 {% for key, project in projects.items() if project.size == size %}

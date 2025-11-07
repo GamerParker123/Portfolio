@@ -16,7 +16,7 @@
         <h3>Links</h3>
         <ul class="project-links">
             {% for name, url in project.links.items() %}
-                <li><a href="{{ url }}" target="_blank" rel="noopener">{{ name }}</a></li>
+                <li><a href="{{ url }}" style="text-decoration: underline; color: rgb(155, 222, 255);" target="_blank" rel="noopener">{{ name }}</a></li>
             {% endfor %}
         </ul>
     {% endif %}
